@@ -1,12 +1,12 @@
-package Main;
+package main.mainmethod;
 
-import Utils.Utils;
+import main.utils.Menu;
 
 public class Main {
 
     public static void main (String[] args){
 
-        Utils.Menu();
+        Menu.mainMenu();
 
 
     }
