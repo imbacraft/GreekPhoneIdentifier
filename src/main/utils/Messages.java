@@ -39,15 +39,37 @@ public class Messages {
 
     }
 
-    public static void displayInputContainsMoreThan3DigitSequencesMessage (Boolean answer){
+    public static void displayInputContainsMoreThan3DigitSequencesMessage (Boolean check){
 
-            if (answer == false){
+            if (check == false){
 
                 System.out.println("Invalid input. Each number sequence must be maximum 3 digits long! Please try again! \n");
             }
 
 
         }
+
+    public static void displayInputHasInvalidStartingDigitsMessage (Boolean check, String input){
+
+        if (check == false){
+
+            System.out.println("Input: "+ input + "   [phone number: INVALID]"+ " \nValid Greek phone numbers may have 10 or 14 digits. If they have 10 digits, they must start\n" +
+                    "with ‘2’ or ‘69’. If they have 14 digits, the must start with ‘0 0 30 2’ or ‘0 0 30 69’. Please try again! \n");
+        }
+
+
+    }
+
+    public static void displayInputHasNot10or14DigitsMessage(Boolean check){
+
+        if (check == false){
+
+            System.out.println("Invalid input. Valid Greek phone numbers may have 10 or 14 digits. Please try again! \n");
+        }
+
+
+
+    }
 
     }
 
