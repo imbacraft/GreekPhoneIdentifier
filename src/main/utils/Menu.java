@@ -1,8 +1,6 @@
 package main.utils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
 
@@ -44,9 +42,10 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
     String[] inputAsArray;
     String properlyFormattedInput;
     Map<Integer, List<String>> result;
-    List<String> finalResult;
+    Map<Integer, String> stringMap = new HashMap<>();
+    Map<Integer, String> contractedStringMap = new HashMap<>();
 
-    boolean hasOnlyNumbers, hasOnly3DigitSequences, hasValidStartingDigits, has10or14Digits;
+    boolean hasOnlyNumbers, hasOnly3DigitSequences, hasValidStartingDigits = true, has10or14Digits = true;
 
     do {
         //Note that a new Scanner object has to be created for each loop, as a method of clearing previous Scanner input.
@@ -64,16 +63,24 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
         //Here checks for ambiguities
 
 
-        properlyFormattedInput = Converters.stringArrayToString(inputAsArray);
-        hasValidStartingDigits = Checks.hasValidStartingDigits(properlyFormattedInput);
-        Messages.displayInputHasInvalidStartingDigitsMessage(hasValidStartingDigits, properlyFormattedInput);
-
-        has10or14Digits = Checks.has10or14Digits(properlyFormattedInput);
-        Messages.displayInputHasNot10or14DigitsMessage(has10or14Digits);
+//        hasValidStartingDigits = Checks.hasValidStartingDigits(properlyFormattedInput);
+//        Messages.displayInputHasInvalidStartingDigitsMessage(hasValidStartingDigits, properlyFormattedInput);
 
         result = Converters.possibleInterpretations(inputAsArray);
 
-        result.values().forEach(x -> System.out.println(x.toString()));
+        result.values().forEach(x -> System.out.println("Values as String arrays are: " + x.toString()));
+
+        for (Integer i : result.keySet()){
+
+            stringMap.put(i, Converters.listOfStringsToString(result.get(i)));
+
+        }
+
+        contractedStringMap = removeZeroes(stringMap);
+
+        contractedStringMap.forEach(stringMap::putIfAbsent);
+
+        stringMap.values().forEach(x-> System.out.println("Final values as Strings are: "+ x.toString()));
 
 //        for (int i=0; i<result.size(); i++){
 //
@@ -86,6 +93,30 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
 
 
     } while (!hasOnlyNumbers || !hasOnly3DigitSequences || !hasValidStartingDigits || ! has10or14Digits);
+
+}
+
+
+public static Map<Integer, String> removeZeroes(Map<Integer, String> stringMap){
+
+    for (int i=0; i<stringMap.size(); i++){
+
+        String contractedString = stringMap.get(i).substring(3);
+        String removedZeros = contractedString.replace("0", "");
+
+        System.out.println("Removed Zero String is : "+ removedZeros);
+        stringMap.put(i + stringMap.size(), removedZeros);
+
+        System.out.println("Value of contractedStringMap is : "+ stringMap.get(i).toString());
+
+
+
+    }
+
+    return stringMap;
+
+
+
 
 }
 

@@ -9,12 +9,12 @@ public class Converters {
         return input.split(" ");
     }
 
-    protected static String stringArrayToString(String[] arrayOfStrings){
+    protected static String listOfStringsToString(List<String> listOfStrings){
         StringBuilder builder = new StringBuilder();
         String str;
-        for (int i=0; i<arrayOfStrings.length; i++){
+        for (int i=0; i<listOfStrings.size(); i++){
 
-            builder.append(arrayOfStrings[i]);
+            builder.append(listOfStrings.get(i));
 
         }
         str = builder.toString();
@@ -24,18 +24,19 @@ public class Converters {
 
     protected static Map<Integer, List<String>> possibleInterpretations(String[] inputAsArray){
         Map<Integer, List<String>> result = new HashMap<>();
-        String expandedString, initialString;
+        String expandedString;
         List<String> inputAsList;
 
-        //Put input as it is initially into the map.
-        inputAsList = new ArrayList<>(Arrays.asList(inputAsArray));
-        result.put(0, inputAsList);
+//        //Put input as it is initially into the map.
+//        inputAsList = new ArrayList<>(Arrays.asList(inputAsArray));
+//        result.put(0, inputAsList);
 
         for (int i=0; i<inputAsArray.length; i++){
 
             if (inputAsArray[i].length() == 2 && !inputAsArray[i].endsWith("0")){
 
-                initialString = inputAsArray[i];
+                inputAsList = new ArrayList<>(Arrays.asList(inputAsArray));
+                result.put(i, inputAsList);
 
                 expandedString = inputAsArray[i].substring(0,1) + "0" + inputAsArray[i].substring(1,2);
 
@@ -52,15 +53,18 @@ public class Converters {
         }
 
         
-        for (int i=0; i)
 
         return result;
 
 
+            }
+
+
+        }
 
 
 
-    }
 
 
-}
+
+
