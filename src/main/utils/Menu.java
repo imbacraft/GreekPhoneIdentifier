@@ -41,9 +41,12 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
     String input;
     String[] inputAsArray;
     String properlyFormattedInput;
-    Map<Integer, List<String>> result;
+    List<List<String>> result;
     Map<Integer, String> stringMap = new HashMap<>();
     Map<Integer, String> contractedStringMap = new HashMap<>();
+    List<String> stringList = new ArrayList<>();
+    List<String> removedZeroesList = new ArrayList<>();
+    List<String> removedDuplicatesList = new ArrayList<>();
 
     boolean hasOnlyNumbers, hasOnly3DigitSequences, hasValidStartingDigits = true, has10or14Digits = true;
 
@@ -68,27 +71,32 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
 
         result = Converters.possibleInterpretations(inputAsArray);
 
-        result.values().forEach(x -> System.out.println("Values as String arrays are: " + x.toString()));
+        for (List<String> list : result){
 
-        for (Integer i : result.keySet()){
+            stringList.add(Converters.listOfStringsToString(list));
+        }
 
-            stringMap.put(i, Converters.listOfStringsToString(result.get(i)));
+        stringList.forEach(x-> System.out.println("String List Item is "+ x));
+
+        removedZeroesList = removeZeroes(stringList);
+
+        for (String str : removedZeroesList){
+
+            stringList.add(str);
 
         }
 
-        contractedStringMap = removeZeroes(stringMap);
 
-        contractedStringMap.forEach(stringMap::putIfAbsent);
+        removedDuplicatesList = Converters.removeDuplicatesWithStream(stringList);
 
-        stringMap.values().forEach(x-> System.out.println("Final values as Strings are: "+ x.toString()));
+//        removedDuplicatesList = removeResultsWithoutZeroesBeginning(removedDuplicatesList);
 
-//        for (int i=0; i<result.size(); i++){
-//
-//            System.out.println(result.get(i).toString());
-//
-//        }
+        for (int i = 0; i < removedDuplicatesList.size(); i++){
+            int counter = i+1;
+            System.out.println("Interpretation "+ counter +": "+ removedDuplicatesList.get(i));
 
 
+        }
 
 
 
@@ -97,28 +105,46 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
 }
 
 
-public static Map<Integer, String> removeZeroes(Map<Integer, String> stringMap){
-
-    for (int i=0; i<stringMap.size(); i++){
-
-        String contractedString = stringMap.get(i).substring(3);
-        String removedZeros = contractedString.replace("0", "");
-
-        System.out.println("Removed Zero String is : "+ removedZeros);
-        stringMap.put(i + stringMap.size(), removedZeros);
-
-        System.out.println("Value of contractedStringMap is : "+ stringMap.get(i).toString());
+public static List<String> removeZeroes(List<String> stringList){
+    List<String> listOfRemovedZeroes = new ArrayList<>();
+    String removedZeros;
 
 
+    for (int i=0; i<stringList.size(); i++){
 
+        removedZeros = stringList.get(i).replaceFirst("(?:0)+", "");
+
+        if (removedZeros.startsWith("3")){
+
+            removedZeros = removedZeros.replace("3", "003");
+        }
+
+        listOfRemovedZeroes.add(removedZeros);
     }
 
-    return stringMap;
+    listOfRemovedZeroes.forEach(x-> System.out.println("List of Removed Zeroes Item is: "+ x));
 
-
+    return listOfRemovedZeroes;
 
 
 }
+
+    public static List<String> removeResultsWithoutZeroesBeginning(List<String> stringList){
+
+    for(int i=0; i<stringList.size(); i++){
+
+        if(!stringList.get(i).startsWith("0") && (!stringList.get(i).startsWith("2") || !stringList.get(i).startsWith("6"))){
+
+            System.out.println("String to be removed is: "+ stringList.get(i));
+            stringList.remove(i);
+
+        }
+
+    }
+
+
+    return stringList;
+    }
 
 
 
