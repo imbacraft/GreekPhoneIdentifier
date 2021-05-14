@@ -1,39 +1,22 @@
 package main.utils;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Utils {
-
-    protected static String[] splitInput(String input){
-
-        return input.split(" ");
-    }
-
-    protected static String listOfStringsToString(List<String> listOfStrings){
-        StringBuilder builder = new StringBuilder();
-        String str;
-        for (int i=0; i<listOfStrings.size(); i++){
-
-            builder.append(listOfStrings.get(i));
-
-        }
-        str = builder.toString();
-        return str;
-
-    }
 
     protected static List<String> getPossibleInterpretations(String[] inputAsArray){
         List<List<String>> listOfLists = new ArrayList<>();
         List<String> inputAsList = new ArrayList<>(Arrays.asList(inputAsArray));;
-        List<String> listOfRemovedZeroes = new ArrayList<>();
-        List<String> result = new ArrayList<>();
+        List<String> listOfRemovedZeroes;
+        List<String> result;
 
         listOfLists.add(inputAsList);
 
         addZerosToInputItems(listOfLists, inputAsArray);
 
-        result = convertListOfListsOfStringToListOfString(listOfLists);
+        result = Converters.convertListOfListsOfStringToListOfString(listOfLists);
 
         listOfRemovedZeroes = removeZeroes(result);
 
@@ -42,7 +25,7 @@ public class Utils {
             result.add(str);
         }
 
-        result = Utils.removeDuplicatesFromListOfStrings(result);
+        result = Converters.removeDuplicatesFromListOfStrings(result);
 
         return result;
 
@@ -96,17 +79,10 @@ public class Utils {
 
         }
 
-    }
 
-    public static List<String> removeDuplicatesFromListOfStrings(List<String> list){
-
-        List<String> listWithoutDuplicates = list.stream()
-                .distinct()
-                .collect(Collectors.toList());
-
-        return listWithoutDuplicates;
 
     }
+
 
     public static List<String> removeZeroes(List<String> stringList){
         List<String> listOfRemovedZeroes = new ArrayList<>();
@@ -114,40 +90,26 @@ public class Utils {
 
         for (int i=0; i<stringList.size(); i++){
 
-            removedFirstZeros = stringList.get(i).replaceFirst("(?:0)+", "");
-            removedLastSingleZero = replaceLastOccurrenceOfString(stringList.get(i), "0", "");
-            removedLastTwoZeros = replaceLastOccurrenceOfString(stringList.get(i), "00", "");
+            removedFirstZeros = stringList.get(i).substring(0,4)+ stringList.get(i).substring(4).replaceFirst("(?:0)+", "");
+            listOfRemovedZeroes.add(removedFirstZeros);
+
+
+
+            removedLastSingleZero = Converters.replaceLastOccurrenceOfString(stringList.get(i), "0", "");
+            removedLastTwoZeros = Converters.replaceLastOccurrenceOfString(stringList.get(i), "00", "");
+
 
             listOfRemovedZeroes.add(removedLastSingleZero);
             listOfRemovedZeroes.add(removedLastTwoZeros);
-            listOfRemovedZeroes.add(removedFirstZeros);
+
         }
+
 
         return listOfRemovedZeroes;
 
     }
 
-    public static String replaceLastOccurrenceOfString(String string, String toReplace, String replacement) {
-        int pos = string.lastIndexOf(toReplace);
-        if (pos > -1) {
-            return string.substring(0, pos)
-                    + replacement
-                    + string.substring(pos + toReplace.length());
-        } else {
-            return string;
-        }
-    }
 
-    public static List<String> convertListOfListsOfStringToListOfString (List<List<String>> listToConvert) {
-        List<String> result = new ArrayList<>();
-
-        for (List<String> list : listToConvert) {
-
-            result.add(listOfStringsToString(list));
-        }
-
-        return result;
-    }
 }
 
 

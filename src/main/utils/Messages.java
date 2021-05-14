@@ -28,7 +28,7 @@ public class Messages {
 
     public static void displayRetryQuery(){
 
-        System.out.println("Do you want to retry? (Y/N)");
+        System.out.println("\nDo you want to retry? (Y/N)");
 
     }
 

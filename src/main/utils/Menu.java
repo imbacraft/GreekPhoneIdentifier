@@ -12,12 +12,11 @@ public class Menu {
         Messages.displayWelcomeMessage();
 
         do {
-            inputInstructionsAndBasicChecksSubMenu();
 
+            performAllChecksAndDeliverFinalResult();
 
             Messages.displayRetryQuery();
             input = sc.nextLine();
-
 
         } while (input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("Yes"));
 
@@ -36,35 +35,32 @@ public class Menu {
      *         If true, it displays error message and repeats the loop</li>
      *     </ol>
      */
-private static void inputInstructionsAndBasicChecksSubMenu(){
+private static void performAllChecksAndDeliverFinalResult(){
 
     String input;
     String[] inputAsArray;
-    List<List<String>> result;
-    List<String> finalList = new ArrayList<>();
-    List<String> listOfValidValues = new ArrayList<>();
-
+    List<String> finalList;
+    List<String> listOfValidValues;
     boolean isAValidInput;
 
     do {
-        //Note that a new Scanner object has to be created for each loop, as a method of clearing previous Scanner input.
-        sc = new Scanner(System.in);
-        Messages.displayInputInstructions();
-        input = sc.nextLine();
 
+        input = getInitialUserInput();
 
-        inputAsArray = Utils.splitInput(input);
+        inputAsArray = Converters.stringToStringArray(input);
 
         isAValidInput = Checks.performValidInputChecks(inputAsArray);
 
 
-        finalList = Utils.getPossibleInterpretations(inputAsArray);
+        if (isAValidInput){
 
-        listOfValidValues = Checks.performValidGreekPhoneNumberChecks(finalList);
+            finalList = Utils.getPossibleInterpretations(inputAsArray);
+
+            listOfValidValues = Checks.performValidGreekPhoneNumberChecks(finalList);
 
 
-        Messages.displayFinalResultMessage(finalList, listOfValidValues);
-
+            Messages.displayFinalResultMessage(finalList, listOfValidValues);
+        }
 
 
 
@@ -73,6 +69,15 @@ private static void inputInstructionsAndBasicChecksSubMenu(){
 }
 
 
+public static String getInitialUserInput(){
+    String input;
 
+    //Note that a new Scanner object has to be created for each loop, as a method of clearing previous Scanner input.
+    sc = new Scanner(System.in);
+    Messages.displayInputInstructions();
+    input = sc.nextLine();
+
+    return input;
+}
 
 }

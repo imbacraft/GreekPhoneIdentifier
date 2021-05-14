@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Checks {
 
-    protected static List<String> performValidGreekPhoneNumberChecks(List<String> listOfInterpretations) {
+    public static List<String> performValidGreekPhoneNumberChecks(List<String> listOfInterpretations) {
         List<String> listOfValidValues = new ArrayList<>();
 
         for (String str : listOfInterpretations) {
@@ -26,59 +26,70 @@ public class Checks {
 
 
 
-    protected static boolean hasValidStartingDigits (String input) {
+    public static boolean hasValidStartingDigits (String input) {
 
-        return input.startsWith("2") || input.startsWith("69") || input.startsWith("00302") ||
-                input.startsWith("003069");
+        if (input.length() == 10){
 
+            return input.startsWith("2") || input.startsWith("69");
 
         }
 
-
-    protected static boolean hasOnlyNumbers(String input) {
-        if (input.matches("[0-9][0-9 ]*$")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    protected static boolean hasMaximum3DigitSequences(String input) {
-        if (input.length() < 3) {
-            return true;
+        if (input.length() == 14) {
+                return input.startsWith("00302") || input.startsWith("003069");
         }
 
         return false;
-    }
 
-    protected static boolean performValidInputChecks(String[] array) {
-        boolean hasOnlyNumbers;
-        boolean hasMaximum3DigitSequences;
-
-        //TODO: hasMaximum3 Digits requires Array of Strings to work
-
-        for (String s : array) {
-            hasOnlyNumbers = hasOnlyNumbers(s);
-            hasMaximum3DigitSequences = hasMaximum3DigitSequences(s);
-
-            if (hasOnlyNumbers && hasMaximum3DigitSequences) {
-
-                return true;
-
-            } else {
-
-                System.out.println("Maximum digits is: "+ hasMaximum3DigitSequences);
-                Messages.displayInputContainsOtherThanNumbersMessage(hasOnlyNumbers);
-                Messages.displayInputContainsMoreThan3DigitSequencesMessage(hasMaximum3DigitSequences);
+        }
 
 
+    public static boolean hasOnlyNumbers(String[] array) {
+
+        for (int i=0; i<array.length; i++){
+
+            if (!array[i].matches("[0-9][0-9 ]*$")) {
+                return false;
             }
+
         }
 
-        return false;
+
+        return true;
     }
 
-    protected static boolean has10or14Digits(String input) {
+    public static boolean hasMaximum3DigitSequences(String[] array) {
+
+        for (int i = 0; i<array.length; i++){
+
+            if (array[i].length() > 3) {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    public static boolean performValidInputChecks(String[] array) {
+
+        if (hasOnlyNumbers(array) == false){
+
+            Messages.displayInputContainsOtherThanNumbersMessage(hasOnlyNumbers(array));
+            return false;
+
+        }
+
+        if (hasMaximum3DigitSequences(array) == false){
+
+            Messages.displayInputContainsMoreThan3DigitSequencesMessage(hasMaximum3DigitSequences(array));
+            return false;
+        }
+
+
+        return true;
+    }
+
+    public static boolean has10or14Digits(String input) {
 
         return input.length() == 10 || input.length() == 14;
     }
