@@ -1,5 +1,7 @@
 package main.utils;
 
+import java.util.List;
+
 public class Messages {
 
     public static void displayWelcomeMessage(){
@@ -68,7 +70,16 @@ public class Messages {
         }
 
 
+    }
 
+    public static void displayFinalResultMessage(List<String> result, List<String> listOfValidValues){
+
+        for (int i = 0; i < result.size(); i++){
+            int counter = i+1;
+            System.out.println("Interpretation "+ counter +": "+ result.get(i) +"   "+ listOfValidValues.get(i));
+
+
+        }
     }
 
     }
