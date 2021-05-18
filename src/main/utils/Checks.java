@@ -94,6 +94,34 @@ public class Checks {
         return input.length() == 10 || input.length() == 14;
     }
 
+
+    public static void performAllChecksAndDeliverFinalResult(){
+
+        String input;
+        String[] inputAsArray;
+        List<String> possibleNumberInterpretations, validOrInvalidPhone;
+        boolean isAValidInput;
+
+        do {
+
+            input = Menu.getInitialUserInput();
+            inputAsArray = Converters.stringToStringArray(input);
+
+            //Perform basic checks for a valid input.
+            isAValidInput = Checks.performValidInputChecks(inputAsArray);
+
+            //If basic input checks are passed, get possible interpretations and perform Valid Greek Phone checks.
+            if (isAValidInput){
+
+                possibleNumberInterpretations = Utils.getPossibleInterpretations(inputAsArray);
+                validOrInvalidPhone = Checks.performValidGreekPhoneNumberChecks(possibleNumberInterpretations);
+                Messages.displayFinalResultMessage(possibleNumberInterpretations, validOrInvalidPhone);
+            }
+
+        } while (!isAValidInput);
+
+    }
+
 }
 
 
