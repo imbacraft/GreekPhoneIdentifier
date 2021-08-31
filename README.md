@@ -1,4 +1,4 @@
-# NaturalNumbersInterpretation
+# Natural Numbers Interpretation Application
 
 Project created for Omilia Ltd Academy.
 
@@ -23,7 +23,7 @@ Also if the sequence contains ‘...75...’, the result number may be: ‘...70
 Greek phone numbers may have 10 or 14 digits. If they have 10 digits, they must start with ‘2’ or ‘69’. If they have 14 digits, the must start with ‘00302’ or ‘003069’.
 
 
-# Languages and Tech used
+# Languages and IDE used
 Project is built with Java SE on Intellij IDEA, Community Edition version: 2021.1.1.
 
 # Installation
